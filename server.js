@@ -26,12 +26,13 @@ io.on( 'connection', function( socket ){
         io.emit( 'newMessage', {message:message} );
     })
 
+    socket.on('disconnect', function(){
+        message = {id: socket.id, type:'disconnect'}
+        log.push(message)
+        socket.broadcast.emit( 'newMessage', {message:message} );
+    })
+
 });
 
-io.on('disconnect', function(socket){
-    let message = {id: socket.id, type:'disconnect'}
-    log.push(message)
-    socket.broadcast.emit( 'newMessage', {message:message} );
-})
 
 
